@@ -1,0 +1,90 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: github
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: github
+  namespace: github
+secrets:
+- name: github
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: github
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - "*"
+  verbs:
+  - "*"
+- apiGroups:
+  - "batch"
+  resources:
+  - "jobs"
+  verbs:
+  - "*"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: github
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: github
+subjects:
+- kind: ServiceAccount
+  name: github
+  namespace: github
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: github
+  namespace: github
+data: 
+  token: Z2hwX0FqVWllZWlvcm1abldnZmt5OHBsWXR2YTdKWGpBdTRBekRjRAo=
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: github
+  namespace: github
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: github
+  template:
+    metadata:
+      labels:
+        name: github
+    spec:
+      containers:
+        - name: github
+          image: localhost:30000/github:1.0
+          imagePullPolicy: Always
+      serviceAccount: github
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: github
+  namespace: github
+spec:
+  selector:
+    name: github
+  type: NodePort
+  ports:
+    - port: 3002
+      targetPort: 3000
+      name: github
+      protocol: TCP
+      nodePort: 30002

@@ -1,0 +1,90 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: equantifier_frontend_web
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: equantifier_frontend_web
+  namespace: equantifier_frontend_web
+secrets:
+- name: equantifier_frontend_web
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: equantifier_frontend_web
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - "*"
+  verbs:
+  - "*"
+- apiGroups:
+  - "batch"
+  resources:
+  - "jobs"
+  verbs:
+  - "*"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: equantifier_frontend_web
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: equantifier_frontend_web
+subjects:
+- kind: ServiceAccount
+  name: equantifier_frontend_web
+  namespace: equantifier_frontend_web
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: equantifier_frontend_web
+  namespace: equantifier_frontend_web
+data: 
+  token: Z2hwX0FqVWllZWlvcm1abldnZmt5OHBsWXR2YTdKWGpBdTRBekRjRAo=
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: equantifier_frontend_web
+  namespace: equantifier_frontend_web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: equantifier_frontend_web
+  template:
+    metadata:
+      labels:
+        name: equantifier_frontend_web
+    spec:
+      containers:
+        - name: equantifier_frontend_web
+          image: localhost:30000/equantifier_frontend_web:1.0
+          imagePullPolicy: Always
+      serviceAccount: equantifier_frontend_web
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: equantifier_frontend_web
+  namespace: equantifier_frontend_web
+spec:
+  selector:
+    name: equantifier_frontend_web
+  type: NodePort
+  ports:
+    - port: 3002
+      targetPort: 3000
+      name: equantifier_frontend_web
+      protocol: TCP
+      nodePort: 30002

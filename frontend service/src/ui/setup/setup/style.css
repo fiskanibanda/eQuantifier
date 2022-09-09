@@ -1,0 +1,27 @@
+.desktop {
+    display: none;
+}
+.mobile {
+    display: inline-grid;
+}
+.content {
+    margin-left: 0;
+}
+.signup {
+    margin-left: 0;
+}
+@media only screen and (min-width: 800px) {
+    .desktop {
+        display: inline-grid;
+        width: 250px;
+    }
+    .mobile {
+        display: none;
+    }
+    .content {
+        margin-left: 250px;
+    }
+    .signup {
+        margin-left: 30vw;
+    }
+}

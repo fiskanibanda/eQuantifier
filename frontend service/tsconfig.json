@@ -1,0 +1,52 @@
+{
+    "compilerOptions": {
+        /* Language and Environment */
+        "target": "esnext",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        /* Modules */
+        "module": "ES2022",
+        "rootDir": "./src",
+        "outDir": "dist",
+        "removeComments": true,
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        /* Emit */
+        "sourceMap": false,
+        "declaration": true,
+        "noEmitOnError": true,
+        "stripInternal": true,
+        "preserveConstEnums": true,
+        //   "declarationDir": "./dist/types",
+        /* Interop Constraints */
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "preserveSymlinks": true,
+        "forceConsistentCasingInFileNames": true,
+        /* Type Checking */
+        "strict": true,
+        // "noImplicitAny": true,
+        // "strictNullChecks": true,
+        // "strictFunctionTypes": true,
+        // "strictBindCallApply": true,
+        // "strictPropertyInitialization": true,
+        // "noImplicitThis": true,
+        // "useUnknownInCatchVariables": true,
+        // "alwaysStrict": true,
+        // "noUnusedLocals": true,
+        // "noUnusedParameters": true,
+        // "exactOptionalPropertyTypes": false,
+        // "noImplicitReturns": false,
+        // "noFallthroughCasesInSwitch": true,
+        // "noUncheckedIndexedAccess": true,
+        // "noImplicitOverride": true,
+        // "noPropertyAccessFromIndexSignature": true,
+        // "allowUnusedLabels": false,
+        // "allowUnreachableCode": false,
+        /* Completeness */
+        "skipLibCheck": true
+    },
+    "include": [
+        "src"
+    ]
+}
